@@ -10,28 +10,31 @@ const port = process.env.PORT || 3000;
 
 app.use(logger('dev'));
 
-app.get('/api/get-data', (req, res) => {
+app.get('/api/get-data', async (req, res) => {
 
   let params = req.query;
   console.log("params = " + JSON.stringify(params));
   params.i = Number(params.i);
 
-  const client = new MongoClient(process.env.MONGODB_URI, {
-  });
+  const client = new MongoClient(process.env.MONGODB_URI);
 
   let resData = {};
 
-  client.connect().then((db) => {
-    return client.db("dbTest").collection("colTest")
-      .find(params).limit(10).toArray();
-  }).then((resData) => {
+  try {
+
+    await client.connect();
+    const database = client.db("dbTest");
+    const collection = database.collection("colTest");
+    resData = await collection.find(params).limit(10).toArray();
     console.log(`resData = ${JSON.stringify(resData)}`);
-    res.json(resData);
-  }).catch((error) => {
-    throw error;
-  }).finally(() => {
-    client.close();
-  });
+
+  } catch (error) {
+     throw error;
+  } finally {
+     await client.close();
+  }
+
+  res.json(resData);
 
 })
 
