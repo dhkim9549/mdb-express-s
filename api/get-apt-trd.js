@@ -7,13 +7,15 @@ export default async function getAptTrd(req, res) {
 
   logger.info("getAptTrd() start...");
 
-  let params = req.query;
-  logger.info("params = " + JSON.stringify(params));
+  logger.info("req.query = " + JSON.stringify(req.query));
 
-  let queryParams = {};
-  queryParams.aptNm = params.aptNm;
-  if(Number(params.area) > 0) {
-    queryParams.area = {"$gte" : Number(params.area), "$lt" : Number(params.area) + 1.0};
+  let query = {};
+  query.aptNm = req.query.aptNm;
+  if(Number(req.query.area) > 0) {
+    query.area = {
+      "$gte" : Number(req.query.area),
+      "$lt" : Number(req.query.area) + 1.0
+    };
   }
 
   const options = {
@@ -21,16 +23,18 @@ export default async function getAptTrd(req, res) {
     projection: { _id: 0, prc: 1, ctrtYm: 1 },
   };
 
+  logger.info({query, options});
+
   const client = new MongoClient(process.env.MONGODB_URI);
 
-  let resData = {};
+  let resData = [];
 
   try {
 
     await client.connect();
     const database = client.db("dbApt");
     const collection = database.collection("cltAptTrd");
-    resData = await collection.find(queryParams, options).limit(1000).toArray();
+    resData = await collection.find(query, options).limit(5000).toArray();
     logger.info(`resData = ${JSON.stringify(resData)}`);
 
   } catch (error) {
