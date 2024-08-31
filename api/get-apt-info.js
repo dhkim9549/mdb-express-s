@@ -3,9 +3,9 @@ import log4js from 'log4js';
 
 const logger = log4js.getLogger("app");
 
-export default async function getAptNm(req, res) {
+export default async function getAptInfo(req, res) {
 
-  logger.info("getAptNm() start...");
+  logger.info("getAptInfo() start...");
 
   logger.info("req.query = " + JSON.stringify(req.query));
 
@@ -40,6 +40,6 @@ export default async function getAptNm(req, res) {
 
   res.json(resData);
 
-  logger.info("getAptNm() end...");
+  logger.info("getAptInfo() end...");
 
 }
