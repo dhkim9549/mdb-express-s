@@ -10,6 +10,7 @@ export default async function getAptTrd(req, res) {
   logger.info("req.query = " + JSON.stringify(req.query));
 
   let query = {};
+  query.sggu = req.query.sggu
   query.aptNm = req.query.aptNm;
   if(Number(req.query.area) > 0) {
     query.area = {
