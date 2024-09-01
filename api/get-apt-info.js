@@ -25,7 +25,7 @@ export default async function getAptInfo(req, res) {
     const database = client.db("dbApt");
     const collection = database.collection("cltAptInfo");
     resData = await collection
-      .find({keyStr: {$regex: aptNmQr}})
+      .find({sgguAptNm: {$regex: aptNmQr}})
       .sort({prc: -1})
       .limit(1000)
       .toArray();
