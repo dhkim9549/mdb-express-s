@@ -30,6 +30,11 @@ export default async function getAptInfo(req, res) {
       .limit(1000)
       .toArray();
 
+    resData = resData.map((x) => {
+      x.areas = reduceAreas(x.areas);
+      return x;
+    });
+
     logger.info(`resData = ${JSON.stringify(resData)}`);
 
   } catch (error) {
@@ -42,4 +47,14 @@ export default async function getAptInfo(req, res) {
 
   logger.info("getAptInfo() end...");
 
+}
+
+function reduceAreas(areas) {
+  let areas2 = [];
+  areas.forEach((x) => {
+    if(!areas2.includes(Math.floor(x))) {
+      areas2.push(Math.floor(x));
+    }
+  });
+  return areas2;
 }
