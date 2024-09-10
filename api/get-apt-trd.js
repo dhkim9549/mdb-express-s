@@ -21,7 +21,7 @@ export default async function getAptTrd(req, res) {
 
   const options = {
     sort: { ctrtYm: 1, ctrtDy: 1 },
-    projection: { _id: 0, prc: 1, ctrtYm: 1 },
+    projection: { _id: 0, prc: 1, ctrtYm: 1, ctrtDy: 1 },
   };
 
   logger.info({query, options});
