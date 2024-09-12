@@ -23,7 +23,7 @@ export default async function getAptInfo(req, res) {
 
     await client.connect();
     const database = client.db("dbApt");
-    const collection = database.collection("cltAptInfo");
+    const collection = database.collection("colAptInfo");
     resData = await collection
       .find({sgguAptNm: {$regex: aptNmQr}})
       .sort({prc: -1})

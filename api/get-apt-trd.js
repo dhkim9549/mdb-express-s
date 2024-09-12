@@ -20,8 +20,8 @@ export default async function getAptTrd(req, res) {
   }
 
   const options = {
-    sort: { ctrtYm: 1, ctrtDy: 1 },
-    projection: { _id: 0, prc: 1, ctrtYm: 1, ctrtDy: 1 },
+    sort: { ctrtDy: 1 },
+    projection: { _id: 0, prc: 1, ctrtDy: 1 },
   };
 
   logger.info({query, options});
@@ -34,7 +34,7 @@ export default async function getAptTrd(req, res) {
 
     await client.connect();
     const database = client.db("dbApt");
-    const collection = database.collection("cltAptTrd");
+    const collection = database.collection("colAptTrd");
     resData = await collection.find(query, options).limit(5000).toArray();
     logger.info(`resData = ${JSON.stringify(resData)}`);
 
