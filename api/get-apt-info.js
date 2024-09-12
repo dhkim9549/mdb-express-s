@@ -11,6 +11,12 @@ export default async function getAptInfo(req, res) {
 
   let aptNmQr = ".*";
   let aptNm = req.query.aptNm;
+  logger.info({aptNm});
+  if(aptNm == undefined) {
+    res.json({'msg': 'incorrect param'});
+    return;
+  }
+
   for (let i = 0; i < aptNm.length; i++) {
     aptNmQr += aptNm.charAt(i) + ".*";
   }
