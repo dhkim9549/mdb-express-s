@@ -33,7 +33,7 @@ export default async function getAptInfo(req, res) {
     resData = await collection
       .find({sgguAptNm: {$regex: aptNmQr}})
       .sort({prc: -1})
-      .limit(1000)
+      .limit(100)
       .toArray();
 
     resData = resData.map((x) => {
