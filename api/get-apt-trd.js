@@ -18,6 +18,7 @@ export default async function getAptTrd(req, res) {
       "$lt" : Number(req.query.area) + 1.0
     };
   }
+  query.cnclDy = '-';
 
   const options = {
     sort: { ctrtDy: 1 },
@@ -36,7 +37,6 @@ export default async function getAptTrd(req, res) {
     const database = client.db("dbApt");
     const collection = database.collection("colAptTrd");
     resData = await collection.find(query, options).limit(5000).toArray();
-    logger.info(`resData = ${JSON.stringify(resData)}`);
 
   } catch (error) {
     throw error;
