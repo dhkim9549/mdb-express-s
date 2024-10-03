@@ -41,8 +41,6 @@ export default async function getAptInfo(req, res) {
       return x;
     });
 
-    logger.info(`resData = ${JSON.stringify(resData)}`);
-
   } catch (error) {
     throw error;
   } finally {
