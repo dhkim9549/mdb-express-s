@@ -1,7 +1,12 @@
+import dotenv from 'dotenv';
 import { MongoClient } from 'mongodb';
 import log4js from 'log4js';
 
 const logger = log4js.getLogger("app");
+
+dotenv.config();
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
 
 export default async function getAptInfo(req, res) {
 
@@ -21,13 +26,10 @@ export default async function getAptInfo(req, res) {
     aptNmQr += aptNm.charAt(i) + ".*";
   }
 
-  const client = new MongoClient(process.env.MONGODB_URI);
-
   let resData = [];
 
   try {
 
-    await client.connect();
     const database = client.db("dbApt");
     const collection = database.collection("colAptInfo");
     resData = await collection
@@ -43,8 +45,6 @@ export default async function getAptInfo(req, res) {
 
   } catch (error) {
     throw error;
-  } finally {
-    await client.close();
   }
 
   res.json(resData);
