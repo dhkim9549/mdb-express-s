@@ -1,7 +1,12 @@
+import dotenv from 'dotenv';
 import { MongoClient } from 'mongodb';
 import log4js from 'log4js';
 
 const logger = log4js.getLogger("app");
+
+dotenv.config();
+const client = new MongoClient(process.env.MONGODB_URI);
+await client.connect();
 
 export default async function getAptTrd(req, res) {
 
@@ -27,8 +32,6 @@ export default async function getAptTrd(req, res) {
 
   logger.info({query, options});
 
-  const client = new MongoClient(process.env.MONGODB_URI);
-
   let resData = [];
 
   try {
@@ -40,8 +43,6 @@ export default async function getAptTrd(req, res) {
 
   } catch (error) {
     throw error;
-  } finally {
-    await client.close();
   }
 
   res.json(resData);
