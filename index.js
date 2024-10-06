@@ -6,7 +6,7 @@ import getAptTrd from './api/get-apt-trd.js';
 import getAptInfo from './api/get-apt-info.js';
 
 dotenv.config();
-log4js.configure("./config/log4js.json");
+log4js.configure('./config/log4js.json');
 
 const logger = log4js.getLogger("app");
 const app = express();
