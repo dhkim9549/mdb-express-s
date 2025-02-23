@@ -7,5 +7,6 @@ const logger = log4js.getLogger("app");
 const client = new MongoClient(process.env.MONGODB_URI);
 await client.connect();
 const db = client.db("dbApt");
+const dbFF = client.db("dbFF");
 
-export { db };
+export { db, dbFF };
