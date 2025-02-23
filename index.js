@@ -4,6 +4,7 @@ import log4js from "log4js";
 
 import getAptTrd from "./api/get-apt-trd.js";
 import getAptInfo from "./api/get-apt-info.js";
+import getKospiCap from "./api/get-kospi-cap.js";
 
 dotenv.config();
 log4js.configure("./config/log4js.json");
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.get("/api/get-apt-trd", getAptTrd);
 app.get("/api/get-apt-info", getAptInfo);
+app.get("/api/get-kospi-cap", getKospiCap);
 
 app.listen(port, () => {
   logger.info(`Example app listening on port ${port}`);
