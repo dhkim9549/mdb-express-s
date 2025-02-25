@@ -12,7 +12,7 @@ export default async function getKospiCap(req, res) {
 
   const options = {
     sort: { N: 1 },
-    projection: { _id: 0, N: 1, name: 1, cap: 1 },
+    projection: { _id: 0 },
   };
 
   logger.info({ query, options });
