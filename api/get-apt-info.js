@@ -6,10 +6,12 @@ const logger = log4js.getLogger("app");
 export default async function getAptInfo(req, res) {
   logger.info("getAptInfo() start...");
 
-  logger.info("req.query = " + JSON.stringify(req.query));
+  logger.info("req.query = " + Object.prototype.toString.call(req.query));
+  logger.info(req.query);
 
   let aptNmQr = ".*";
   let aptNm = req.query.aptNm;
+
   logger.info({ aptNm });
   if (aptNm == undefined) {
     res.json({ msg: "incorrect param" });
@@ -37,6 +39,9 @@ export default async function getAptInfo(req, res) {
   } catch (error) {
     throw error;
   }
+
+  logger.info("resData = " + Object.prototype.toString.call(resData));
+  logger.info(resData);
 
   res.json(resData);
 
