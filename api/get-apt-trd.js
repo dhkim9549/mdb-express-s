@@ -29,6 +29,13 @@ export default async function getAptTrd(req, res) {
   let resData = [];
 
   try {
+    const colAptLog = db.collection("colAptLog");
+    let query2 = structuredClone(query);
+    query2._fstRegTs = new Date();
+    colAptLog.insertOne(query2);
+
+    logger.info({ query2, query, options });
+
     const collection = db.collection("colAptTrd");
     resData = await collection.find(query, options).limit(5000).toArray();
   } catch (error) {
