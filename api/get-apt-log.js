@@ -14,13 +14,18 @@ export default async function getAptLog(req, res) {
     sort: { _fstRegTs: -1 },
   };
 
+  let limit = 5000;
+  if (Number(req.query.limit) > 0) {
+    limit = Number(req.query.limit);
+  }
+
   logger.info({ query, options });
 
   let resData = [];
 
   try {
     const collection = db.collection("colAptLog");
-    resData = await collection.find(query, options).limit(5000).toArray();
+    resData = await collection.find(query, options).limit(limit).toArray();
   } catch (error) {
     throw error;
   }
