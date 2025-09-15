@@ -14,23 +14,31 @@ export default async function getAptLog(req, res) {
     sort: { _fstRegTs: -1 },
   };
 
-  let limit = 5000;
-  if (Number(req.query.limit) > 0) {
-    limit = Number(req.query.limit);
-  }
-
   logger.info({ query, options });
 
   let resData = [];
 
   try {
     const collection = db.collection("colAptLog");
-    resData = await collection.find(query, options).limit(limit).toArray();
+    resData = await collection.find(query, options).limit(5000).toArray();
   } catch (error) {
     throw error;
   }
 
-  res.json(resData);
+  let resData2 = [];
+  resData.forEach((e) => {
+    let shallAdd = true;
+    resData2.forEach((ee) => {
+      if (ee.sggu == e.sggu && ee.aptNm == e.aptNm) {
+        shallAdd = false;
+      }
+    });
+    if (shallAdd && resData2.length <= 5) {
+      resData2.push({ sggu: e.sggu, aptNm: e.aptNm });
+    }
+  });
+
+  res.json(resData2);
 
   logger.info("getAptLog() end...");
 }
